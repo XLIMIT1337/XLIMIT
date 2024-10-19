@@ -1,4 +1,4 @@
-sudo apt-get install g++
+sudo apt-get install gcc-multilib g++-multilib
 
 g++ -o XLIMIT XLIMIT.cpp -static -lpthread -std=c++17 -I. -m32
 
