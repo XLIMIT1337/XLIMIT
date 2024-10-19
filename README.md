@@ -1,6 +1,6 @@
 sudo apt-get install gcc-multilib g++-multilib
 
-g++ -m32 -o XLIMIT XLIMIT.cpp -static -lpthread -std=c++17 -I.
+g++ -m32 -o XLIMIT XLIMIT.cpp -static -std=c++17 -I.
 
 file XLIMIT
 
