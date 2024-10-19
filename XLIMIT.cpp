@@ -8,18 +8,17 @@
 int main() {
     httplib::Server svr;
 
-    std::string htmlContent = "<!DOCTYPE html><html lang='en'><head><title>XLIMIT</title><style>body{margin:0;padding:0;background-color:#f2f2f2;font-family:Arial;color:#333;}#container{max-width:900px;margin:50px auto;background-color:#f0f0f0;border:1px solid #a9a9a9;}#title-container{padding:8px 10px;background-color:#e2e2e2;border:1px solid #a9a9a9;}#title{font-size:14px;font-weight:bold;color:#333;}#file-container{padding:8px 10px;border:1px solid #a9a9a9;background-color:#fff;font-size:12px;}#file-name{display:inline-block;}#file-container a{float:right;color:#ff6600;text-decoration:none;font-size:12px;font-weight:bold;}#file-container a:hover{text-decoration:underline;}</style></head><body><div id='container'><div id='title-container'><div id='title'>XLIMIT</div></div>";
+    svr.Get("/", [](const httplib::Request& req, httplib::Response& res) {
+        std::string htmlContent = "<!DOCTYPE html><html lang='en'><head><title>XLIMIT</title><style>body{margin:0;padding:0;background-color:#f2f2f2;font-family:Arial;color:#333;}#container{max-width:900px;margin:50px auto;background-color:#f0f0f0;border:1px solid #a9a9a9;}#title-container{padding:8px 10px;background-color:#e2e2e2;border:1px solid #a9a9a9;}#title{font-size:14px;font-weight:bold;color:#333;}#file-container{padding:8px 10px;border:1px solid #a9a9a9;background-color:#fff;font-size:12px;}#file-name{display:inline-block;}#file-container a{float:right;color:#ff6600;text-decoration:none;font-size:12px;font-weight:bold;}#file-container a:hover{text-decoration:underline;}</style></head><body><div id='container'><div id='title-container'><div id='title'>XLIMIT</div></div>";
 
-    for (const auto& entry : std::filesystem::directory_iterator(".")) {
-        if (entry.is_regular_file()) {
-            std::string fileName = entry.path().filename().string();
-            htmlContent += "<div id='file-container'><div id='file-name'>" + fileName + "</div><a href='/" + fileName + "' download>DOWNLOAD</a></div>";
+        for (const auto& entry : std::filesystem::directory_iterator(".")) {
+            if (entry.is_regular_file()) {
+                std::string fileName = entry.path().filename().string();
+                htmlContent += "<div id='file-container'><div id='file-name'>" + fileName + "</div><a href='/" + fileName + "' download>DOWNLOAD</a></div>";
+            }
         }
-    }
 
-    htmlContent += "</div></body></html>";
-
-    svr.Get("/", [&htmlContent](const httplib::Request& req, httplib::Response& res) {
+        htmlContent += "</div></body></html>";
         res.set_content(htmlContent, "text/html");
     });
 
